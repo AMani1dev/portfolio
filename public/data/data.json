@@ -1,0 +1,76 @@
+[
+  {
+    "id": "Aanstekelijk",
+    "title": "Aanstekelijk",
+    "card": {
+      "imgSrc": "/work/images/Aanstekelijk__card.webp",
+      "yearCreated": 2025
+    },
+    "page": {
+      "link" : "https://amani1dev.github.io/Aanstekelijk/" ,
+      "location": "The Netherlands ©2023",
+      "description": "Aanstekelijk is a creative marketing agency that transforms bold ideas into powerful campaigns. By blending strategy, design, and storytelling, we help brands connect with audiences in meaningful ways.",
+      "keywords": ["creative", "campaigns", "brands"],
+      "imagesReveal": [
+        { "src": "/WorkDetails/images/Aanstekelijk/img-reveal-1.webp", "title": "Dreamscape" },
+        { "src": "/WorkDetails/images/Aanstekelijk/img-reveal-2.webp", "title": "Neon Horizon" }
+      ]
+    }
+  },
+  {
+    "id": "twice",
+    "title": "twice",
+    "card": {
+      "imgSrc": "/work/images/twice__card.webp",
+      "yearCreated": 2025
+    },
+    "page": {
+      "link" : "https://amani1dev.github.io/twice/" ,
+      "location": "Global Reach ©2024",
+      "description": "Twice is a modern digital agency focused on marketing innovation. We craft strategies that elevate brands across social media, content, and web campaigns to drive growth and visibility.",
+      "keywords": ["digital", "innovation", "growth"],
+      "imagesReveal": [
+        { "src": "/WorkDetails/images/twice/img-reveal-1.webp"},
+        { "src": "/WorkDetails/images/twice/img-reveal-2.webp"},
+        { "src": "/WorkDetails/images/twice/img-reveal-3.webp"}
+      ]
+    }
+  },
+  {
+    "id": "dashboard",
+    "title": "dashboard",
+    "card": {
+      "imgSrc": "/work/images/admin__card.webp",
+      "yearCreated": 2025
+    },
+    "page": {
+      "link" : "" ,
+      "location": "Tech Hub ©2025",
+      "description": "Dashboard is a sleek analytics platform that turns complex data into clear insights. With real-time tracking, customizable widgets, and intuitive design, it empowers businesses to make smarter decisions.",
+      "keywords": ["analytics", "insights", "design"],
+      "imagesReveal": [
+        { "src": "/WorkDetails/images/dashboard/img-reveal-1.webp" },
+        { "src": "/WorkDetails/images/dashboard/img-reveal-2.webp" }
+      ]
+    }
+  },
+  {
+    "id": "nexum",
+    "title": "nexum",
+    "card": {
+      "imgSrc": "/work/images/nexum__card.webp",
+      "yearCreated": 2025
+    },
+    "page": {
+      "link" : "https://amani1dev.github.io/nexum/" ,
+      "location": "Gaming Universe ©2025",
+      "description": "Nexum is a futuristic battle royale landing page that immerses players in an epic gaming world. Designed for speed, visuals, and hype, it delivers the ultimate pre-launch experience for gamers.",
+      "keywords": ["futuristic", "gaming", "experience"],
+      "imagesReveal": [
+        { "src": "/WorkDetails/images/nexum/img-reveal-1.webp", "title": "Arena Rise" },
+        { "src": "/WorkDetails/images/nexum/img-reveal-2.webp", "title": "Shadow Clash" },
+        { "src": "/WorkDetails/images/nexum/img-reveal-3.webp" }
+      ]
+    }
+  }
+]

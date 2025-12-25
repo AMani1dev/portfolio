@@ -1,0 +1,43 @@
+@media(width < 350px){
+.menu-wrapper {
+    flex-direction: column;
+    justify-content: start;
+    align-items: center;
+}
+.menu-links{
+    left: 50%;
+    transform: translateX(-50%);
+    margin-left: 0;
+}
+
+}
+
+@media(width > 350px){
+
+.menu-links {
+    left: 0;
+    transform: translateX(0);
+}
+
+}
+
+
+@media(width > 1000px){
+
+    .menu-wrapper {
+        align-items: center;
+    }
+    .menu-img {
+        display: block;
+    }
+
+    .menu-links {
+        width: max-content;
+        flex-direction: row;
+        margin-left: 0;
+        margin-bottom: 10px;
+        gap: 2.5rem;
+        font-size: 8rem;
+    }
+}
+
