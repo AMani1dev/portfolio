@@ -10,7 +10,7 @@ const RootLayout = () => {
 
   return (
     <>
-    {/* <Intro/> */}
+    <Intro/>
 
       <Menu />
       <PageTransition />
