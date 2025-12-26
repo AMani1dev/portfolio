@@ -1,3 +1,3 @@
-import{j as s,C as e}from"./index-DQ3e4LkX.js";const l=()=>s.jsx("div",{className:`text-white bg-(--primary-clr) h-screen supports-[height:1svh]:h-svh\r
+import{j as s,C as e}from"./index-B70we2FO.js";const l=()=>s.jsx("div",{className:`text-white bg-(--primary-clr) h-screen supports-[height:1svh]:h-svh\r
         capitalize content-center\r
         `,children:s.jsxs("section",{className:"container sm:w-[80vw] px-5 sm:mx-auto ",children:[s.jsxs("div",{className:"flex flex-col md:flex-row justify-between gap-10",children:[s.jsxs("div",{className:"text-3xl font-bold",children:[s.jsx("h1",{children:"success.  "}),s.jsx("h1",{children:"message sent! "})]}),s.jsx("div",{className:"",children:s.jsx("p",{children:"i will contact you as soon as possible"})})]}),s.jsx("div",{className:"pl-[5vw] md:pl-0 md:float-end md:mr-[15vw] mt-5",children:s.jsx(e,{text:" home",to:"/",textClr:"text-white"})})]})});export{l as default};
