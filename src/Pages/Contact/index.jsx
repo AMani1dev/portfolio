@@ -40,7 +40,7 @@ const Info = () => {
 
         <ul className="list-none flex flex-col gap-2 mt-3">
           <li>
-            <a href="https://www.instagram.com/itsfrontend404/" target="_blank" className="text-white ">
+            <a href="https://instagram.com/itsfrontend404?rpxt=Z20yODEzMWI0NDZi" target="_blank" className="text-white ">
               instagram
             </a>
           </li>
