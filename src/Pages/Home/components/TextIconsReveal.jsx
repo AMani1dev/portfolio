@@ -1,202 +1,272 @@
+import { useRef } from "react";
 import gsap from "gsap";
 import ScrollTrigger from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
-gsap.registerPlugin(ScrollTrigger);
 
 import { BsPcDisplayHorizontal } from "react-icons/bs";
 import { FaReact } from "react-icons/fa";
 import { RiTailwindCssFill } from "react-icons/ri";
 
+gsap.registerPlugin(ScrollTrigger, useGSAP);
+
+const HEADER_START = 0.3;
+const ICONS_END = 0.6;
+const TEXT_START = 0.75;
+
 const iconsData = [
-  { src: <BsPcDisplayHorizontal/> },
-  { src: <FaReact /> },
-  { src: <RiTailwindCssFill/> },
+  { id: "pc", Icon: BsPcDisplayHorizontal },
+  { id: "react", Icon: FaReact },
+  { id: "tailwind", Icon: RiTailwindCssFill },
 ];
 
-const AniamtedIcons = () => (
-  <div className="animated-icons fixed bottom-5  left-5 right-5 rounded-lg flex flex-wrap items-center justify-center gap-5 will-change-transform">
-    {iconsData.map((icon, i) => (
+const TextSegment = ({ children }) => (
+  <span className="text-segment inline-block text-white opacity-0">
+    {" "}{children}{" "}
+  </span>
+);
+
+const IconPlaceholder = () => (
+  <span
+    aria-hidden="true"
+    className="icon-placeholder inline-block h-[50px] w-[50px] align-middle"
+  />
+);
+
+const AnimatedIcons = () => (
+  <div className="animated-icons fixed bottom-5 left-5 right-5 z-10 flex flex-wrap items-center justify-center gap-5">
+    {iconsData.map(({ id, Icon }) => (
       <div
-        key={i}
-        className={`animated-icon icon-${
-          i + 1
-        }  w-[50px] aspect-square flex justify-center items-center rounded-lg will-change-transform text-2xl`}
+        key={id}
+        className="animated-icon flex aspect-square w-[50px] shrink-0 items-center justify-center rounded-lg text-2xl"
       >
-        {icon.src}
+        <Icon />
       </div>
     ))}
   </div>
 );
 
-const AnimatedText = () => {
-  const TextSegment = ({ text }) => {
-    return <span className="text-segment text-white opacity-0"> {text} </span>;
-  };
+const AnimatedText = () => (
+  <div className="animated-text relative max-w-[35ch] px-3 text-center text-lg font-semibold leading-none sm:px-0 sm:text-2xl sm:font-medium">
+    <TextSegment>frontend web developer</TextSegment>
+    <IconPlaceholder />
 
-  const IconPlaceholder = () => {
-    return (
-      <div className="icon-placeholder w-[50px] aspect-square inline-block will-change-transform align-middle">
-        {/* invisible */}
-      </div>
-    );
-  };
+    <TextSegment>creating modern websites with react</TextSegment>
+    <IconPlaceholder />
 
-  return (
-
-    <div className="animated-text text-lg sm:text-2xl px-3 sm:px-0 max-w-[35ch] font-semibold sm:font-medium relative text-center leading-none">
-
-
-
-      <TextSegment text={"frontend web developer"} />
-      <IconPlaceholder />
-
-
-<TextSegment text={"creating modern websites with react"} />
-      <IconPlaceholder />
-
-<TextSegment text={"powered by bootstrap, gsap & tailwind css"} />
-      <IconPlaceholder />
-
-
-    </div>
-  );
-};
+    <TextSegment>powered by bootstrap, gsap &amp; tailwind css</TextSegment>
+    <IconPlaceholder />
+  </div>
+);
 
 const TextIconsReveal = () => {
-useGSAP(() => {
-  const iconsWrapper = document.querySelector(".animated-icons");
-  const iconElements = document.querySelectorAll(".animated-icon");
-  const placeholders = document.querySelectorAll(".icon-placeholder");
-  const heroHeader = document.querySelector(".hero-header");
+  const containerRef = useRef(null);
 
-    const textSegments = document.querySelectorAll(".text-segment");
+  useGSAP(
+    () => {
+      const container = containerRef.current;
 
-  const animationEnd = window.innerHeight * 5;
+      if (!container) return;
 
-  let startCenters = null;
-  const targetCenters = Array.from(placeholders).map(holder => {
-    const rect = holder.getBoundingClientRect();
-    return { x: rect.left + rect.width / 2, y: rect.top + rect.height / 2 };
-  });
+      const hero = container.querySelector(".hero");
+      const heroHeader = container.querySelector(".hero-header");
+      const iconsWrapper = container.querySelector(".animated-icons");
 
-  ScrollTrigger.create({
-    trigger: ".hero",
-    start: "top top",
-    end: `+=${animationEnd}px`,
-    pin: true,
-    pinSpacing: true,
-    scrub: true,
-    onUpdate: (self) => {
-      const originalProgress = self.progress;
+      const iconElements = gsap.utils.toArray(
+        container.querySelectorAll(".animated-icon")
+      );
 
-      gsap.to(".hero", {
-        // backgroundColor : originalProgress <= 0.2 ? "white" : "#131313",
-        backgroundColor : originalProgress <= 0.2 ? "white" : "var(--primary-clr)",
-        color : originalProgress <= 0.2 ? "#131313" : "white",
-      })
+      const placeholders = gsap.utils.toArray(
+        container.querySelectorAll(".icon-placeholder")
+      );
 
-      if (originalProgress <= 0.3) {
-        const translateProgress = originalProgress / 0.3;
-        const translateYVal = -window.innerHeight * 0.3 * translateProgress;
+      const textSegments = gsap.utils.toArray(
+        container.querySelectorAll(".text-segment")
+      );
 
-        const centerPageY = Math.round(window.innerHeight / 2);
-        const iconsWrapperRect = iconsWrapper.getBoundingClientRect();
-        const iconsWrapperY = Math.round(
-          iconsWrapperRect.top + iconsWrapperRect.height
-        );
-
-        const targetCenterY = centerPageY - iconsWrapperY;
-
-        gsap.to(heroHeader, {
-          y: translateYVal * 0.5,
-          opacity: 1 - translateProgress * 2,
-        });
-
-        gsap.to(iconsWrapper, {
-          y: targetCenterY * translateProgress * 4,
-        });
-
+      if (
+        !hero ||
+        !heroHeader ||
+        !iconsWrapper ||
+        iconElements.length !== placeholders.length
+      ) {
+        return;
       }
 
-else if (originalProgress <= 0.6) {
-  const moveProgress = (originalProgress - 0.3) / 0.3;
+      const clamp = gsap.utils.clamp(0, 1);
 
-  if (!startCenters) {
-    startCenters = Array.from(iconElements).map(icon => {
-      const rect = icon.getBoundingClientRect();
-      return { x: rect.left + rect.width / 2, y: rect.top + rect.height / 2 };
-    });
-  }
+      let layout = null;
 
-  iconElements.forEach((icon, i) => {
-    const startCenter = startCenters[i];
-    const targetCenter = targetCenters[i];
+      // Smooth background transition controlled by scroll progress.
+      // A paused tween avoids creating competing tweens on every update.
+      const backgroundTween = gsap.to(hero, {
+        backgroundColor: "var(--primary-clr)",
+        paused: true,
+        duration: 0.8,
+        ease: "power2.inOut",
+      });
 
-    const moveX = targetCenter.x - startCenter.x;
-    const moveY = (targetCenter.y - startCenter.y) + 3; // ✅ adjust 7px lower
+      const measureLayout = () => {
+        gsap.set(iconsWrapper, { x: 0, y: 0 });
+        gsap.set(iconElements, { x: 0, y: 0 });
 
-    let currentX = 0;
-    let currentY = 0;
+        const wrapperRect = iconsWrapper.getBoundingClientRect();
 
-    if (moveProgress <= 0.5) {
-      const verticalProgress = moveProgress / 0.5;
-      currentY = moveY * verticalProgress;
-    } else {
-      const horizontalProgress = (moveProgress - 0.5) / 0.5;
-      currentY = moveY;
-      currentX = moveX * horizontalProgress;
-    }
+        const iconStartCenters = iconElements.map((icon) => {
+          const rect = icon.getBoundingClientRect();
 
-    gsap.set(icon, {
-      x: currentX,
-      y: currentY,
-    });
-  });
-}else {
+          return {
+            x: rect.left + rect.width / 2,
+            y: rect.top + rect.height / 2,
+          };
+        });
 
-textSegments.forEach((item, i) => {
-  const segmentStart = 0.75 + i * 0.03;   
-  const segmentEnd   = segmentStart + 0.03;
+        const placeholderCenters = placeholders.map((placeholder) => {
+          const rect = placeholder.getBoundingClientRect();
 
-  const segmentProgress = gsap.utils.mapRange(
-    segmentStart,
-    segmentEnd,
-    0,
-    1,
-    originalProgress
+          return {
+            x: rect.left + rect.width / 2,
+            y: rect.top + rect.height / 2,
+          };
+        });
+
+        layout = {
+          wrapperShiftY:
+            window.innerHeight / 2 -
+            (wrapperRect.top + wrapperRect.height / 2),
+
+          iconStartCenters,
+          placeholderCenters,
+        };
+      };
+
+      const renderProgress = (progress) => {
+        if (!layout) return;
+
+        // Phase 1: Move the icon group toward the viewport center.
+        const headerProgress = clamp(progress / HEADER_START);
+
+        gsap.set(iconsWrapper, {
+          y: layout.wrapperShiftY * headerProgress,
+        });
+
+        gsap.set(heroHeader, {
+          y: -window.innerHeight * 0.15 * headerProgress,
+          opacity: clamp(1 - headerProgress * 2),
+        });
+
+        // Phase 2: Move icons vertically, then horizontally.
+        const iconProgress = clamp(
+          (progress - HEADER_START) /
+            (ICONS_END - HEADER_START)
+        );
+
+        iconElements.forEach((icon, index) => {
+          const start = layout.iconStartCenters[index];
+          const target = layout.placeholderCenters[index];
+
+          const deltaX = target.x - start.x;
+
+          const deltaY =
+            target.y - start.y - layout.wrapperShiftY + 3;
+
+          const verticalProgress = clamp(iconProgress * 2);
+
+          const horizontalProgress = clamp(
+            (iconProgress - 0.5) * 2
+          );
+
+          gsap.set(icon, {
+            x: deltaX * horizontalProgress,
+            y: deltaY * verticalProgress,
+          });
+        });
+
+        // Phase 3: Reveal text segments in sequence.
+        textSegments.forEach((segment, index) => {
+          const segmentStart = TEXT_START + index * 0.03;
+          const segmentEnd = segmentStart + 0.03;
+
+          const segmentProgress = clamp(
+            (progress - segmentStart) /
+              (segmentEnd - segmentStart)
+          );
+
+          gsap.set(segment, {
+            opacity: segmentProgress * 0.7,
+          });
+        });
+
+        // Smoothly interpolate the background from white to the
+        // primary color during the first 20% of the scroll animation.
+        const backgroundProgress = clamp(progress / 0.2);
+
+        backgroundTween.progress(backgroundProgress);
+      };
+
+      gsap.set(hero, {
+        backgroundColor: "white",
+        color: "#131313",
+      });
+
+      gsap.set(heroHeader, {
+        xPercent: -50,
+        yPercent: -50,
+        y: 0,
+        opacity: 1,
+      });
+
+      gsap.set(textSegments, { opacity: 0 });
+      gsap.set(iconsWrapper, { x: 0, y: 0 });
+      gsap.set(iconElements, { x: 0, y: 0 });
+
+      measureLayout();
+
+      const scrollTrigger = ScrollTrigger.create({
+        trigger: hero,
+        start: "top top",
+        end: () => `+=${window.innerHeight * 5}`,
+        pin: true,
+        pinSpacing: true,
+        scrub: true,
+        invalidateOnRefresh: true,
+
+        onRefreshInit: () => {
+          gsap.set(iconsWrapper, { x: 0, y: 0 });
+          gsap.set(iconElements, { x: 0, y: 0 });
+        },
+
+        onRefresh: (self) => {
+          measureLayout();
+          renderProgress(self.progress);
+        },
+
+        onUpdate: (self) => {
+          renderProgress(self.progress);
+        },
+      });
+
+      renderProgress(scrollTrigger.progress);
+
+      return () => {
+        scrollTrigger.kill();
+      };
+    },
+    { scope: containerRef }
   );
 
-  const clampedProgress = Math.max(0, Math.min(1, segmentProgress));
-
-  gsap.set(item, {
-    opacity: clampedProgress * .7,
-  });
-});
-
-
-}
-
-
-    },
-  });
-});
-
-
   return (
-    <>
-      <section
-        className="hero flex flex-col justify-center items-center h-screen supports-[height:1svh]:h-svh relative overflow-hidden transition-[background-color] duration-300 ease-linear"
-      >
-        <div className="hero-header capitalize text-center absolute top-[15%] left-1/2 -translate-1/2 will-change-[transform,opacity]">
-          <h1 className="text-6xl sm:text-7xl ">
-            mani amine 
+    <div ref={containerRef}>
+      <section className="hero relative flex h-screen flex-col items-center justify-center overflow-hidden supports-[height:1svh]:h-svh">
+        <div className="hero-header absolute left-1/2 top-[15%] capitalize text-center will-change-[transform,opacity]">
+          <h1 className="whitespace-nowrap text-6xl sm:text-7xl">
+            mani amine
           </h1>
         </div>
 
         <AnimatedText />
-        <AniamtedIcons />
+        <AnimatedIcons />
       </section>
-    </>
+    </div>
   );
 };
 

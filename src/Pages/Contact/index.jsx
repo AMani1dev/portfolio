@@ -40,20 +40,11 @@ const Info = () => {
 
         <ul className="list-none flex flex-col gap-2 mt-3">
           <li>
-            <a href="https://www.instagram.com/x.mani.dev/" target="_blank" className="text-white ">
+            <a href="https://www.instagram.com/itsfrontend404/" target="_blank" className="text-white ">
               instagram
             </a>
           </li>
-          <li>
-            <a href="https://www.tiktok.com/@a.mani.dev?is_from_webapp=1&sender_device=pc" target="_blank" className="text-white ">
-              tiktok
-            </a>
-          </li>
-          <li>
-            <a className="pointer-events-none select-none text-white">
-              linkedin
-            </a>
-          </li>
+
         </ul>
       </div>
       
